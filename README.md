@@ -102,3 +102,18 @@ Update `frontend/src/services/api.js` baseURL to `http://localhost:8000/api` for
 - check_out (ISO datetime)
 - status (present/absent)
 - created_at
+
+Used rate limiting 
+Summary of what was added:
+     
+  ┌────────────────────┬─────────────┬────────┬────────────────────────────────────────┐
+  │      Endpoint      │    Limit    │ Window │                  Why                   │
+  ├────────────────────┼─────────────┼────────┼────────────────────────────────────────┤
+  │ /api/auth/login    │ 5 requests  │ 60 sec │ Prevents brute-force password guessing │
+  ├────────────────────┼─────────────┼────────┼────────────────────────────────────────┤
+  │ /api/auth/register │ 3 requests  │ 60 sec │ Prevents spam account creation         │
+  ├────────────────────┼─────────────┼────────┼────────────────────────────────────────┤
+  │ /api/auth/verify   │ 10 requests │ 60 sec │ Prevents token brute-forcing           │
+  └────────────────────┴─────────────┴────────┴────────────────────────────────────────┘
+  It uses Redis to track request counts per IP per endpoint, and auto-expires after the
+  window. No extra libraries needed — uses the Redis already in the stack.
