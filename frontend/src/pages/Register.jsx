@@ -22,28 +22,29 @@ export default function Register() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1>Register</h1>
+        <h1>Create account</h1>
+        <p className="auth-subtitle">Get started with your attendance tracking.</p>
         {error && <div className="alert alert-error">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>Full name</label>
             <input
               type="text"
               required
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder="Enter your name"
+              placeholder="John Doe"
             />
           </div>
           <div className="form-group">
-            <label>Email</label>
+            <label>Email address</label>
             <input
               type="email"
               required
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="Enter your email"
+              placeholder="you@example.com"
             />
           </div>
           <div className="form-group">
@@ -54,13 +55,13 @@ export default function Register() {
               minLength={6}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              placeholder="Enter your password"
+              placeholder="Minimum 6 characters"
             />
           </div>
-          <button type="submit" className="btn btn-primary">Register</button>
+          <button type="submit" className="btn btn-primary">Create account</button>
         </form>
         <p className="auth-link">
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Sign in</Link>
         </p>
       </div>
     </div>

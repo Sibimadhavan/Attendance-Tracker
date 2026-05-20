@@ -26,7 +26,7 @@ export default function Dashboard() {
   const handleCheckIn = async () => {
     try {
       const res = await api.post("/attendance/check-in");
-      setToday({ ...today, ...res.data, status: "present" });
+      setToday((prev) => ({ ...prev, ...res.data, status: "present" }));
     } catch (err) {
       alert(err.response?.data?.detail || "Check-in failed");
     }
@@ -51,29 +51,29 @@ export default function Dashboard() {
       <div className="page-header">
         <div>
           <h1>Dashboard</h1>
-          <p className="subtitle">Welcome, {user?.name}</p>
+          <p className="subtitle">Welcome back, {user?.name}</p>
         </div>
       </div>
 
       <div className="dashboard-grid">
         <div className="dashboard-card">
-          <div className="card-label">Today's Status</div>
+          <div className="card-label">Status</div>
           <div className={`status-badge ${today?.status === "present" ? "status-present" : "status-absent"}`}>
-            {today?.status === "present" ? "Present" : "Absent"}
+            {today?.status === "present" ? "Present" : "Not checked in"}
           </div>
         </div>
 
         <div className="dashboard-card">
           <div className="card-label">Check In</div>
           <div className="card-value">
-            {today?.check_in ? new Date(today.check_in).toLocaleTimeString() : "--:--:--"}
+            {today?.check_in ? new Date(today.check_in).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--:--"}
           </div>
         </div>
 
         <div className="dashboard-card">
           <div className="card-label">Check Out</div>
           <div className="card-value">
-            {today?.check_out ? new Date(today.check_out).toLocaleTimeString() : "--:--:--"}
+            {today?.check_out ? new Date(today.check_out).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "--:--"}
           </div>
         </div>
 
@@ -91,13 +91,13 @@ export default function Dashboard() {
           <button className="btn btn-danger" onClick={handleCheckOut}>Check Out</button>
         )}
         {isCheckedOut && (
-          <span className="done-label">Done for today</span>
+          <span className="done-label">All done for today</span>
         )}
       </div>
 
       <div className="nav-links">
-        <Link to="/attendance" className="btn btn-outline">View All Attendance</Link>
-        <Link to="/calendar" className="btn btn-outline">Calendar View</Link>
+        <Link to="/attendance" className="btn btn-outline">View Attendance</Link>
+        <Link to="/calendar" className="btn btn-outline">Calendar</Link>
       </div>
     </div>
   );

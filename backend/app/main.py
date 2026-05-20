@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, attendance
+from app.middleware.rate_limiter import RateLimitMiddleware
 
 app = FastAPI(title="Attendance Tracker")
+
+app.add_middleware(RateLimitMiddleware)
 
 app.add_middleware(
     CORSMiddleware,

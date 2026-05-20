@@ -26,8 +26,8 @@ export default function AttendanceList() {
     <div className="page-container">
       <div className="page-header">
         <div>
-          <h1>Attendance Records</h1>
-          <p className="subtitle">All users' attendance</p>
+          <h1>Attendance</h1>
+          <p className="subtitle">All users' attendance records</p>
         </div>
         <div className="filter-group">
           <input
@@ -59,11 +59,11 @@ export default function AttendanceList() {
             <tbody>
               {records.map((r, i) => (
                 <tr key={i}>
-                  <td>{r.name}</td>
-                  <td>{r.email}</td>
-                  <td>{r.date}</td>
-                  <td>{r.check_in ? new Date(r.check_in).toLocaleTimeString() : "-"}</td>
-                  <td>{r.check_out ? new Date(r.check_out).toLocaleTimeString() : "-"}</td>
+                  <td className="td-name">{r.name}</td>
+                  <td className="td-email">{r.email}</td>
+                  <td className="td-date">{r.date}</td>
+                  <td>{r.check_in ? new Date(r.check_in).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "-"}</td>
+                  <td>{r.check_out ? new Date(r.check_out).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "-"}</td>
                   <td>
                     <span className={`status-badge small ${r.status === "present" ? "status-present" : "status-absent"}`}>
                       {r.status}
